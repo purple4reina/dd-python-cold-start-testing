@@ -1,4 +1,4 @@
-service: rey-python-abfab
+service: python-ab-test
 
 provider:
   name: aws
@@ -8,7 +8,7 @@ provider:
   environment:
     DD_COLD_START_TRACE_SKIP_LIB: none
     DD_MIN_COLD_START_DURATION: 0
-    REY_INIT_API: false
+    PYAB_INIT_API: false
 
 package:
   patterns:
@@ -28,10 +28,12 @@ functions:
     handler: handler.handler
     url: true
     layers:
+      # Change this to the before layer version you wish to compare
       - arn:aws:lambda:sa-east-1:425362996713:layer:Python312-REY:46
 
   after:
     handler: handler.handler
     url: true
     layers:
+      # Change this to the after layer version you wish to compare
       - arn:aws:lambda:sa-east-1:425362996713:layer:Python312-REY:47
