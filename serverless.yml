@@ -1,0 +1,37 @@
+service: rey-python-abfab
+
+provider:
+  name: aws
+  region: sa-east-1
+  architecture: arm64
+  runtime: python3.12
+  environment:
+    DD_COLD_START_TRACE_SKIP_LIB: none
+    DD_MIN_COLD_START_DURATION: 0
+    REY_INIT_API: false
+
+package:
+  patterns:
+    - '!**'
+    - 'handler.py'
+
+plugins:
+  - serverless-plugin-datadog
+
+custom:
+  datadog:
+    apiKey: ${env:DD_API_KEY}
+    addLayers: false
+
+functions:
+  before:
+    handler: handler.handler
+    url: true
+    layers:
+      - arn:aws:lambda:sa-east-1:425362996713:layer:Python312-REY:46
+
+  after:
+    handler: handler.handler
+    url: true
+    layers:
+      - arn:aws:lambda:sa-east-1:425362996713:layer:Python312-REY:47
