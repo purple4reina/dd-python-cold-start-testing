@@ -2,9 +2,12 @@ service: python-ab-test
 
 provider:
   name: aws
+
+  # Update these or use the defaults
   region: sa-east-1
   architecture: arm64
   runtime: python3.12
+
   environment:
     DD_COLD_START_TRACE_SKIP_LIB: none
     DD_MIN_COLD_START_DURATION: 0
