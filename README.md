@@ -87,4 +87,16 @@ $ export ACCOUNT=1234567890
 $ aws-vault exec <your-aws-account-here> -- ./execute.sh
 ```
 
+Let the script run for 5-10 minutes or more to produce enough data.
+
 ## Analyze
+
+If you're using the `ddserverless` DataDog org, then you can use the ["Rey's
+Awesome Purple Dashboard"](https://ddserverless.datadoghq.com/dashboard/5yn-x2m-2ne/reys-awesome-purple-dashboard?fromUser=false&refresh_mode=paused&from_ts=1746664500908&to_ts=1746664800908&live=false&tile_focus=4418579574713790)
+to view the results. Otherwise, you can create a new DataDog dashboard using
+the provided `dashboard.json` file.
+
+Note that you may need to update the `before-funcname` and `after-funcname`
+dashboard variable at the top of the page. By default, the `serverless.yml`
+file will deploy your functions as `python-ab-test-dev-before` and
+`python-ab-test-dev-after` respectively.
