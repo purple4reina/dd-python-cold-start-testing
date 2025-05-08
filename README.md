@@ -100,3 +100,5 @@ Note that you may need to update the `before-funcname` and `after-funcname`
 dashboard variable at the top of the page. By default, the `serverless.yml`
 file will deploy your functions as `python-ab-test-dev-before` and
 `python-ab-test-dev-after` respectively.
+
+![img](dashboard.png)
