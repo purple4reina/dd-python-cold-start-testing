@@ -107,6 +107,9 @@ easier every other time.
     $ aws-vault exec $ACCOUNT_NAME -- sls deploy
     ```
 
+1. Take note of the function names you just deployed. They will be printed to
+   stdout at the end of your deploy.
+
 ## Execute
 
 You're probably mostly interested in seeing differences in cold start times
