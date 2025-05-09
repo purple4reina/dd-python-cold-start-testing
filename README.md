@@ -8,6 +8,42 @@ versions of `dd-trace-py` and `datadog-lambda-python`. You will then deploy two
 lambda functions you wish to compare and execute them. Lastly, you'll be able
 to view results in a custom dashboard.
 
+## Setup
+
+Before you get started, let's gather all your configuration options into
+environment variables. This way you'll be able to just copy and paste the
+commands below without needing to edit them.
+
+1. AWS Account. Determine which account you wish to use. You will need both the
+   account number and the SSO name. If you don't know the latter, check your
+   `~/.aws/config` file.
+
+    ```bash
+    $ export ACCOUNT=1234567890
+    $ export ACCOUNT_NAME=sso-your-account-name-admin
+    ```
+
+1. DataDog API Key. Choose where you want to send your DataDog metrics. Create
+   or grab an existing api key from that account.
+
+    ```bash
+    $ export DD_API_KEY=1234567890abcdefghijklmnopqrstuvwxyz
+    ```
+
+1. AWS Region. Set which region you wish to use. When in doubt, use
+   `us-east-1`.
+
+    ```bash
+    $ export REGION=us-east-1
+    ```
+
+There are other optional configuration options not listed here. The scripts
+[`publish.sh`](publish.sh) and [`execute.sh`](execute.sh) will list all
+available options at the top of their files.
+
+You will want these environment variables to be set for all the commands you
+will execute in your terminal.
+
 ## Deploy
 
 ### Publish testing lambda layers
@@ -23,22 +59,11 @@ easier every other time.
 1. Make your change to either `dd-trace-py` or `datadog-lambda-python`. Commit
    and push those changes.
 
-1. Build and publish your layers using the provided publish script. You'll
-   first want to set any environment variables to change configuration from its
-   default. See the help text at the top of the [`publish.sh`](publish.sh) script for all
-   available configuration options.
+1. Run the publish script. Replace the `dd-trace-py` branch you used above, if
+   you didn't make changes to `ddtrace`, then you can leave the argument blank.
 
     ```bash
-    $ export REGION=us-east-1
-    $ export SUFFIX=purple
-    ```
-
-1. Then, run the publish script. Replace the `dd-trace-py` branch you used
-   above, if you didn't make changes to `ddtrace`, then you can leave the
-   argument blank.
-
-    ```bash
-    $ aws-vault exec <your-aws-account-here> -- ./publish.sh <dd-trace-py-branch>
+    $ aws-vault exec $ACCOUNT_NAME -- ./publish.sh <dd-trace-py-branch>
     ```
 
 1. Take note of the AWS Lambda Layer ARN printed to stdout by the publish
@@ -67,12 +92,10 @@ easier every other time.
    [serverless.yml](serverless.yml) file. These can either be publicly
    available layers or ones you deployed yourself above.
 
-1. Identify which AWS and DataDog accounts you wish to use and deploy the
-   stack.
+1. Deploy the stack.
 
     ```bash
-    $ export DD_API_KEY=<your-dd-api-key-here>
-    $ aws-vault exec <your-aws-account-here> -- sls deploy
+    $ aws-vault exec $ACCOUNT_NAME -- sls deploy
     ```
 
 ## Execute
@@ -82,16 +105,7 @@ between layer versions. This means you'll probably want to have a lot of cold
 starts to compare. You can do this by calling the execute script
 
 ```bash
-$ aws-vault exec <your-aws-account-here> -- ./execute.sh
-```
-
-If you need to update the AWS account or region, they can be changed via
-environment variables, such as
-
-```bash
-$ export REGION=us-east-1
-$ export ACCOUNT=1234567890
-$ aws-vault exec <your-aws-account-here> -- ./execute.sh
+$ aws-vault exec $ACCOUNT_NAME -- ./execute.sh
 ```
 
 Let the script run for 5-10 minutes or more to produce enough data.
