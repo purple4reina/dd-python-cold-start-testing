@@ -50,7 +50,14 @@ easier every other time.
    your lambda stack.  To install, run
 
     ```bash
-    $ npm i serverless -g
+    $ npm install serverless@"<4.0.0" -g
+    ```
+
+    Also install our serverless plugin which will be used to install our
+    datadog instrumentation.
+
+    ```bash
+    $ serverless plugin install -n serverless-plugin-datadog
     ```
 
 1. Identify which AWS region, python version, and architecture you wish to use.
@@ -93,8 +100,13 @@ Let the script run for 5-10 minutes or more to produce enough data.
 
 If you're using the `ddserverless` DataDog org, then you can use the ["Rey's
 Awesome Purple Dashboard"](https://ddserverless.datadoghq.com/dashboard/5yn-x2m-2ne/reys-awesome-purple-dashboard?fromUser=false&refresh_mode=paused&from_ts=1746664500908&to_ts=1746664800908&live=false&tile_focus=4418579574713790)
-to view the results. Otherwise, you can create a new DataDog dashboard using
-the provided `dashboard.json` file.
+to view the results.
+
+If you're using DataDog org 2, then you can use the ["Python Performance AB
+Testing"](https://app.datadoghq.com/dashboard/r8i-pu9-u8z?fromUser=false&refresh_mode=sliding&from_ts=1746811143076&to_ts=1746814743076&live=true) dashboard to view the results.
+
+Otherwise, you can create a new DataDog dashboard using the provided
+`dashboard.json` file.
 
 Note that you may need to update the `before-funcname` and `after-funcname`
 dashboard variable at the top of the page. By default, the `serverless.yml`

@@ -25,7 +25,7 @@ if [[ -z $URLS ]]; then
         URLS="$URLS $(
             aws lambda get-function-url-config \
                 --function-name "$f" \
-                --region sa-east-1 \
+                --region $REGION \
                 --output json | jq -r '.FunctionUrl'
         )"
     done
