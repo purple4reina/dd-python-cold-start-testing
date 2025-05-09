@@ -37,6 +37,14 @@ commands below without needing to edit them.
     $ export REGION=us-east-1
     ```
 
+1. Suffix. This step is optionally but recommended. It will make sure all the
+   resources you deploy to AWS are unique to you. Let's not step on other's
+   toes.
+
+    ```bash
+    $ export SUFFIX=your-name-here
+    ```
+
 There are other optional configuration options not listed here. The scripts
 [`publish.sh`](publish.sh) and [`execute.sh`](execute.sh) will list all
 available options at the top of their files.
@@ -85,12 +93,13 @@ easier every other time.
     $ serverless plugin install -n serverless-plugin-datadog
     ```
 
-1. Identify which AWS region, python version, and architecture you wish to use.
-   Update these values in the [serverless.yml](serverless.yml) file.
-
 1. Update layer versions on the before and after functions in the
    [serverless.yml](serverless.yml) file. These can either be publicly
    available layers or ones you deployed yourself above.
+
+    For reference, you can always find the arns for the most recently released
+    python layer on the [datadog-lambda-python releases
+    page](https://github.com/DataDog/datadog-lambda-python/releases).
 
 1. Deploy the stack.
 
