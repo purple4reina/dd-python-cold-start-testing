@@ -3,8 +3,8 @@ service: python-ab-test
 provider:
   name: aws
 
-  region: ${env:REGION, sa-east-1}
-  architecture: ${env:ARCHITECTURE, arm64}
+  region: ${env:REGION, 'sa-east-1'}
+  architecture: ${env:ARCHITECTURE, 'arm64'}
   runtime: python${env:PYTHON_VERSION, 3.12}
 
   environment:
